@@ -130,6 +130,8 @@ if monthOfBirth > 0 && monthOfBirth <= 3 {
     print("Я родилась в третьем квартале")
 } else if monthOfBirth > 9 && monthOfBirth <= 12  {
     print("Я родилась в четвертом квартале")
+} else {
+    print("Error")
 }
 
 // 4
@@ -137,3 +139,5 @@ let sinus = sin(1.0)
 let roundedSinus = (sinus * 1000).rounded() / 1000
 
 print(roundedSinus)
+print(round(sinus * 1000) / 1000)
+print(String(format: "Sinus by one is %.3f", sinus))
