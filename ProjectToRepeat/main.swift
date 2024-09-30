@@ -192,5 +192,76 @@ weather = temperature < 18 ? "The weather is cool" : "The weather is warm"
 print(weather)
 
 // Оператор Switch
+var grade: Character = "A"
 
+grade = "b"
 
+if grade == "A" || grade == "a" {
+    print("Excellent")
+} else if grade == "B" || grade == "b" {
+    print("Good")
+} else if grade == "C" || grade == "c"  {
+    print("Satisfactory")
+} else if grade == "D" || grade == "d"  {
+    print("Could be better")
+} else {
+    print("Invalid grade")
+}
+
+switch grade {
+case "A", "a":
+    print("Excellent")
+case "B", "b":
+    print("Good")
+case "C", "c":
+    print("Satisfactory")
+case "D", "d":
+    print("Could be better")
+default:
+    print("Invalid grade")
+}
+
+// Задание 1
+let quantity = 18
+var price = 0.0
+
+if quantity <= 0 {
+    print("Wrong amount of quantity")
+} else if quantity <= 9 {
+    price = 1000
+} else if quantity <= 19 {
+    price = 800
+} else {
+    price = 600
+}
+
+print("Общая сумма: \(Double(quantity) * price)")
+
+// Задание 2
+let levelOfSituation = "A"
+
+switch levelOfSituation {
+case "A":
+    print("Выключить все электрические приборы")
+    fallthrough
+case "B":
+    print("Закрыть входные двери и окна")
+    fallthrough
+default:
+    print("Соблюдать спокойствие")
+}
+
+// Задание 3
+let color = "brown"
+let filling = "chocolate"
+
+switch filling {
+case "chocolate" where color == "red":
+    print("Put in the first bunch")
+case "nuts" where color == "yellow":
+    print("Put in the second bunch")
+case "chocolate" where color == "green" || color == "brown":
+    print("Put in the third bunch")
+default:
+    print("Put it away")
+}
