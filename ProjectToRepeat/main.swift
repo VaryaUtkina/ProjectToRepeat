@@ -222,20 +222,24 @@ default:
 }
 
 // Задание 1
-let quantity = 18
-var price = 0.0
+let quantity = 11
+let price: Int
+let totalSum: Int
 
-if quantity <= 0 {
-    print("Wrong amount of quantity")
-} else if quantity <= 9 {
+
+if quantity < 0 {
+    price = 0
+} else if (0...9).contains(quantity) {
     price = 1000
-} else if quantity <= 19 {
+} else if (10...19).contains(quantity) {
     price = 800
 } else {
     price = 600
 }
 
-print("Общая сумма: \(Double(quantity) * price)")
+totalSum = price * quantity
+
+print("Общая сумма: \(totalSum)")
 
 // Задание 2
 let levelOfSituation = "A"
@@ -247,8 +251,10 @@ case "A":
 case "B":
     print("Закрыть входные двери и окна")
     fallthrough
-default:
+case "C":
     print("Соблюдать спокойствие")
+default:
+    break
 }
 
 // Задание 3
@@ -265,3 +271,128 @@ case "chocolate" where color == "green" || color == "brown":
 default:
     print("Put it away")
 }
+
+// Lesson 4
+// Типы коллекций
+// Массивы
+
+//let strings = ["a", "b", "c"]
+
+//let characters: [Character] = ["a", "b", "c"]
+
+var integers: [Int] = []
+integers = [1, 2, 3]
+integers = [4, 5, 6]
+
+integers += [7, 8]
+integers.append(9)
+integers.insert(1, at: 0)
+
+var someIntegers = integers + [12, 17]
+
+someIntegers.removeLast()
+let lastValueFromArray = someIntegers.removeLast()
+
+someIntegers.removeFirst()
+someIntegers.remove(at: 1)
+
+let count = someIntegers.count
+someIntegers.removeAll()
+integers = []
+
+integers = [10, 20, 40]
+let index = integers.firstIndex(of: 40)
+integers[index ?? 0] = 30
+
+
+if !integers.isEmpty {
+    integers.remove(at: 0)
+}
+
+// Множества
+let strings: Set = ["a", "a", "a", "b", "c"]
+
+var charecters: Set<Character> = []
+charecters.insert("b")
+if charecters.contains("b") {
+    print(true)
+}
+
+charecters = ["a", "d", "v", "b", "c"]
+let chars = charecters.sorted(by: >)
+print(chars)
+
+// Словари
+let users = [1: "Tim Cook", 2: "Taylor Swift"]
+
+var carWashQueue: [String: String] = [:]
+carWashQueue = ["E092BA": "Red Toyota", "X127TG": "Gray BMW X6"]
+carWashQueue["E092BA"] = "Red Camry"
+let oldValue = carWashQueue.updateValue("White BMW X6", forKey: "X127TG")
+carWashQueue["M566PA"] = "Green Chavralet Niva"
+//carWashQueue["E092BA"] = nil
+carWashQueue.removeValue(forKey: "M566PA")
+
+//  Строки
+let string = String(["H", "e", "l", "l", "o"])
+print(string)
+
+let stringCount = string.count
+
+// For-in циклы
+var someSum = 0
+for number in 1...5 {
+    someSum += number
+}
+print(someSum)
+
+let fruits = [
+    "apple",
+    "banana",
+    "pineapple",
+    "apple",
+    "pear",
+    "apple",
+    "apple",
+    "plum",
+    "apple"
+]
+
+var appleCount = 0
+
+for fruit in fruits {
+    if fruit == "apple" {
+        appleCount += 1
+    }
+}
+
+print(appleCount)
+
+let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+
+for (animal, legCount) in numberOfLegs {
+    print("\(animal)s have \(legCount) legs")
+}
+
+let greteeng = "Hello!"
+
+for char in greteeng {
+    print(char)
+}
+
+// While-циклы
+
+var counter = 0
+
+while counter < 5 {
+    print("Counter is \(counter)")
+    counter += 1
+}
+
+repeat {
+    print("Counter is \(counter)")
+    counter += 1
+} while counter < 5
+
+// Задание 1
+
