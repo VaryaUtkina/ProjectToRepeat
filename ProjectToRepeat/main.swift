@@ -141,3 +141,56 @@ let roundedSinus = (sinus * 1000).rounded() / 1000
 print(roundedSinus)
 print(round(sinus * 1000) / 1000)
 print(String(format: "Sinus by one is %.3f", sinus))
+
+
+// Lesson 3
+// Операторы ветвлений
+var temperature = 20
+
+if temperature < 18 { //False
+    print("The weather is cool")
+}
+
+temperature = 15
+
+if temperature < 18 { //False
+    print("The weather is cool")
+}
+
+temperature = 15
+
+if temperature < 18 { //False
+    print("The weather is cool")
+} else if temperature < 25 {
+    print("The weather is warm")
+}
+
+temperature = 30
+
+if temperature < 18 { //False
+    print("The weather is cool")
+} else if temperature < 25 {
+    print("The weather is warm")
+} else {
+    print("The weather is hot")
+}
+
+// Тернарный оператор
+
+var weather = ""
+
+if temperature < 18 {
+    weather = "The weather is cool"
+} else {
+    weather = "The weather is warm"
+}
+
+// condition ? some code : else some code
+
+weather = temperature < 18 ? "The weather is cool" : "The weather is warm"
+
+print(weather)
+
+// Оператор Switch
+
+
