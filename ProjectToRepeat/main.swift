@@ -395,18 +395,18 @@ repeat {
 } while counter < 5
 
 // Задание 1
-let deposit = 500_000.0
+var deposit = 500_000.0
 let period = 5
-let rate = 11.0
+let rate = 0.11
 var profit = 0.0
 
 for _ in 1...period {
-    profit = (deposit + profit) * rate / 100
+    let currentProfit = deposit * rate
+    profit += currentProfit
+    deposit += currentProfit
 }
 
-profit = round(profit * 100) / 100
-
-print("Сумма вклада через \(period) лет увеличится на \(profit) и составит \(deposit + profit) рублей")
+print("Сумма вклада через \(period) лет увеличится на \(profit.rounded()) и составит \(deposit.rounded()) рублей")
 
 // Задание 2
 let numbers = [1, 99, 10, 34, 72, 56]
@@ -421,7 +421,7 @@ for number in numbers {
     if number % 2 == 0 {
         continue
     }
-    print("Нечтное число: \(number)")
+    print("Нечетное число: \(number)")
 }
 
 // Задание 3
@@ -433,15 +433,73 @@ for iteration in 1...10 {
 }
 
 // Задание 4
-let dayDistance = 2
-let nightDistance = -1
+var numberOfDays = 0
 var distance = 0
+var isDay = true
 
-for day in 1... {
-    distance += dayDistance
-    if distance >= 10 {
-        print("Черепашка заберется на столб через \(day) дней.")
-        break
+while distance != 10 {
+    if isDay {
+        distance += 2
+        numberOfDays += 1
+        isDay = false
+    } else {
+        distance -= 1
+        isDay = true
     }
-    distance += nightDistance
 }
+
+print("Черепашке понадобилось \(numberOfDays) дней, чтобы взобраться на \(distance) метровый столб")
+
+
+// Lesson 5
+// Функции
+
+
+func printSinusOfNumberOne() {
+    print(String(format: "Синус числа один равен %.3f", sin(1.0)))
+}
+
+printSinusOfNumberOne()
+let printSinus = printSinusOfNumberOne
+
+printSinus()
+
+func getSinusOfNumberOne() -> Double {
+    let sinus = sin(1.0)
+    return round(sinus * 1000) / 1000
+}
+
+print(getSinusOfNumberOne())
+
+func sum(numberOne: Int, numberTwo: Int) -> Int {
+   numberOne + numberTwo
+}
+
+print(sum(numberOne: 1, numberTwo: 2))
+
+func sum(of numberOne: Int, and numberTwo: Int) -> Int {
+    numberOne + numberTwo
+}
+
+print(sum(of: 1, and: 2))
+
+func calculateRoundedSine(of value: Double, toDecimalPlaces places: Int = 3) -> Double {
+    let sinus = sin(value)
+    let multiplier = pow(10.0, Double(places))
+    return round(sinus * multiplier) / multiplier
+}
+
+print(calculateRoundedSine(of: 1.0))
+
+// Вариативные параметры
+func getArithmeticMean(_ numbers: Double...) -> Double {
+    var total = 0.0
+    
+    for number in numbers {
+        total += number
+    }
+    
+    return total / Double(numbers.count)
+}
+
+print(getArithmeticMean(1, 0, 7.2, 77, -99, 9))
