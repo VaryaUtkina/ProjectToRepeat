@@ -395,4 +395,53 @@ repeat {
 } while counter < 5
 
 // Задание 1
+let deposit = 500_000.0
+let period = 5
+let rate = 11.0
+var profit = 0.0
 
+for _ in 1...period {
+    profit = (deposit + profit) * rate / 100
+}
+
+profit = round(profit * 100) / 100
+
+print("Сумма вклада через \(period) лет увеличится на \(profit) и составит \(deposit + profit) рублей")
+
+// Задание 2
+let numbers = [1, 99, 10, 34, 72, 56]
+
+for number in numbers {
+    if number % 2 == 0 {
+        print("Четное число: \(number)")
+    }
+}
+
+for number in numbers {
+    if number % 2 == 0 {
+        continue
+    }
+    print("Нечтное число: \(number)")
+}
+
+// Задание 3
+for iteration in 1...10 {
+    if Int.random(in: 1...10) == 5 {
+        print("Чтобы выпало число 5 понадобилось \(iteration) итераций")
+        break
+    }
+}
+
+// Задание 4
+let dayDistance = 2
+let nightDistance = -1
+var distance = 0
+
+for day in 1... {
+    distance += dayDistance
+    if distance >= 10 {
+        print("Черепашка заберется на столб через \(day) дней.")
+        break
+    }
+    distance += nightDistance
+}
