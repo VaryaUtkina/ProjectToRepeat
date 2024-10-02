@@ -581,41 +581,41 @@ print(getArrayMultipalOfThree(from: numbersFromOne))
  let center = (0 + 6) / 2
  
  // Рекурсивный способ: функция вызывает саму себя для решения задачи
- func recursiveBinarySearch(for target: Int, in items: [Int]) -> Int? {
- func recursiveBinarySearch(for target: Int, in items: [Int], firstIndex: Int, lastIndex: Int) -> Int? {
- if firstIndex > lastIndex {
- return nil
- }
- // Определить элемент из середины массива
- let middleIndex = (firstIndex + lastIndex) / 2
- let item = items[middleIndex]
- 
- if item == target {
- return middleIndex
- } else if target < item {
- return recursiveBinarySearch(
- for: target,
- in: items,
- firstIndex: firstIndex,
- lastIndex: middleIndex - 1
- )
- } else {
- return recursiveBinarySearch(
- for: target,
- in: items,
- firstIndex: middleIndex + 1,
- lastIndex: lastIndex
- )
- }
- }
- 
- return recursiveBinarySearch(
- for: target,
- in: items,
- firstIndex: 0,
- lastIndex: items.count - 1
- )
- }
+func recursiveBinarySearch(for target: Int, in items: [Int]) -> Int? {
+    func recursiveBinarySearch(for target: Int, in items: [Int], firstIndex: Int, lastIndex: Int) -> Int? {
+        if firstIndex > lastIndex {
+            return nil
+        }
+        // Определить элемент из середины массива
+        let middleIndex = (firstIndex + lastIndex) / 2
+        let item = items[middleIndex]
+        
+        if item == target {
+            return middleIndex
+        } else if target < item {
+            return recursiveBinarySearch(
+                for: target,
+                in: items,
+                firstIndex: firstIndex,
+                lastIndex: middleIndex - 1
+            )
+        } else {
+            return recursiveBinarySearch(
+                for: target,
+                in: items,
+                firstIndex: middleIndex + 1,
+                lastIndex: lastIndex
+            )
+        }
+    }
+    
+    return recursiveBinarySearch(
+        for: target,
+        in: items,
+        firstIndex: 0,
+        lastIndex: items.count - 1
+    )
+}
  
  print(recursiveBinarySearch(for: 7, in: items) ?? "Такого значения нет в массиве")
 
@@ -822,3 +822,84 @@ class Person {
 let person = Person(name: "Tim", age: 62)
 let tom = Person(name: "Tom")
 
+// Задание 1
+class Student {
+    let name: String
+    let age: Int
+    
+    private var grades: [Int] = []
+    
+    var description: String {
+        "\(name): \(averageGrade), \(getStatus(averageGrade))"
+    }
+    
+    var averageGrade: Double {
+        if grades.count == 0 {
+            return 0.0
+        }
+        return Double(grades.reduce(0, +)) / Double(grades.count)
+    }
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+    
+    func addGrade(_ grade: Int) {
+        grades.append(grade)
+    }
+    
+    private func getStatus(_ averageGrade: Double) -> String {
+        let status: String
+        
+        switch averageGrade {
+        case 0: status = "New"
+        case 1..<3: status = "Underperforming"
+        case 3..<6: status = "Average"
+        case 6..<8: status = "Good"
+        case 8..<10: status = "Excellent"
+        default: status = "Wrong data"
+        }
+        
+        return status
+    }
+}
+
+let anna = Student(name: "Anna", age: 19)
+anna.addGrade(5)
+anna.addGrade(10)
+anna.addGrade(9)
+anna.addGrade(9)
+anna.addGrade(8)
+
+print(anna.description)
+
+let susi = Student(name: "Susi", age: 18)
+susi.addGrade(2)
+susi.addGrade(3)
+print(susi.description)
+
+class Classroom {
+    var students: [Student]
+    
+    init(students: [Student] = []) {
+        self.students = students
+    }
+    
+    func addStudent(_ student: Student) {
+        students.append(student)
+    }
+    
+    func getAverageGrade() -> Double{
+        if students.count == 0 {
+            return 0.0
+        } else {
+            return students.map { $0.averageGrade }.reduce(0, +) / Double(students.count)
+        }
+    }
+}
+
+let classRoom = Classroom()
+classRoom.addStudent(anna)
+classRoom.addStudent(susi)
+print(classRoom.getAverageGrade())
