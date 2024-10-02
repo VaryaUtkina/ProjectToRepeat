@@ -711,11 +711,13 @@ let numbersB = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 func customFilter(_ numbers: [Int], closure: (Int) -> Bool) -> [Int] {
     var filteredNumbers: [Int] = []
+    
     for number in numbers {
         if closure(number) {
             filteredNumbers.append(number)
         }
     }
+    
     return filteredNumbers
 }
 
@@ -725,10 +727,11 @@ print(evenNumbers)
 // Задание 2
 func transformString(_ string: String, closure: (Character) -> String) -> String {
     var transformedString = ""
+    
     for char in string {
-        let newChar = closure(char)
-        transformedString.append(newChar)
+        transformedString.append(closure(char))
     }
+    
     return transformedString
 }
 
@@ -737,15 +740,85 @@ let uppercasedString = transformString(originalString) { $0.uppercased() }
 print(uppercasedString)
 
 // Задание 3
-func generateRandomNumbers(from numberOne: Int, to numberTwo: Int, count: Int, closure: (Int) -> Int) -> [Int] {
+func generateRandomNumbers(
+    from numberOne: Int,
+    to numberTwo: Int,
+    count: Int,
+    closure: (Int) -> Int
+) -> [Int] {
     var result: [Int] = []
+    
     for _ in 1...count {
         let number = Int.random(in: numberOne...numberTwo)
-        let transformedNumber = closure(number)
-        result.append(transformedNumber)
+        result.append(closure(number))
     }
+    
     return result
 }
 
 let randomNumbers = generateRandomNumbers(from: 1, to: 100, count: 10) { $0 * 2 }
 print(randomNumbers)
+
+
+// Lesson 7
+// Классы. ООП
+let postTitle = "Classes"
+let  postBody = "Text of the article"
+let postAuthor = "Aleksey Efimov"
+
+let postTitle2 = "Property of classes"
+let postBody2 = "Text of the article"
+let postAuthor2 = postAuthor
+
+class Post {
+    var title = ""
+    var body = ""
+    var author = ""
+    
+    var numberOfComments: Int {
+        comments.count
+    }
+    
+    private var comments: [String] = []
+    
+    func add(comment: String) {
+        comments.append(comment)
+    }
+    
+    func showComments() {
+        for comment in comments {
+            print(comment)
+        }
+    }
+}
+
+let postOne = Post()
+
+postOne.title = "This is my first post"
+postOne.body = "Hello"
+postOne.author = "Aleksey Efimov"
+postOne.add(comment: "Thank you!!!")
+postOne.add(comment: "+1")
+postOne.showComments()
+
+let postTwo = Post()
+
+postTwo.title = "Second post"
+postTwo.body = "A lot of text"
+
+// Если экземпляры ссылаются на один и тот же объект
+print(postOne === postTwo)
+
+class Person {
+    let name: String
+    var age = 0
+    
+    init(name: String, age: Int = 0) {
+        self.name = name
+        self.age = age
+    }
+}
+
+let person = Person(name: "Tim", age: 62)
+let tom = Person(name: "Tom")
+
