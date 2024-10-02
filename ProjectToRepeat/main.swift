@@ -505,7 +505,11 @@ func getArithmeticMean(_ numbers: Double...) -> Double {
 print(getArithmeticMean(1, 0, 7.2, 77, -99, 9))
 
 // Задание 1
-let games = ["Салават Юлаев": ["3:5", "5:5", "N/A"], "Авангврд": ["2:1"], "АкБарс": ["3:3", "1:2"]]
+let games = [
+    "Салават Юлаев": ["3:5", "5:5", "N/A"],
+    "Авангврд": ["2:1"],
+    "АкБарс": ["3:3", "1:2"]
+]
 
 for (team, results) in games {
     for result in results {
@@ -514,15 +518,15 @@ for (team, results) in games {
 }
 
 // Задание 2
-func sum(of numbers: Double...) -> Double {
-    var total = 0.0
+func sum(of numbers: Int...) -> Int {
+    var total = 0
     for number in numbers {
         total += number
     }
     return total
 }
 
-print(sum(of: 1, 1.5, 0))
+print(sum(of: 1, 5, 0))
 
 // Задание 3
 func isNumberEven(_ number: Int) -> Bool {
@@ -533,19 +537,12 @@ func isMultipalOfThree(_ number: Int) -> Bool {
     number % 3 == 0
 }
 
-func getArray(from numberOne: Int, to numberTwo: Int) -> [Int] {
-    if numberOne >= numberTwo {
-        print("Error, the first number must be less then the second")
-        return []
-    } else {
-        var result: [Int] = []
-        var number = numberOne
-        while numberTwo >= number {
-            result.append(number)
-            number += 1
-        }
-        return result
+func getArray(from minNumber: Int, to maxNumber: Int) -> [Int] {
+    var numbers: [Int] = []
+    for number in minNumber...maxNumber {
+        numbers.append(number)
     }
+    return numbers.shuffled()
 }
 
 let numbersFromOne = getArray(from: 1, to: 100)
@@ -573,3 +570,141 @@ func getArrayMultipalOfThree(from array: [Int]) -> [Int] {
 }
 
 print(getArrayMultipalOfThree(from: numbersFromOne))
+
+// Lesson 6
+// Вложенные функции
+
+// Бинарный поиск в отсортированном массиве
+ let items = [0, 1, 2, 3, 4, 5, 6]
+ 
+ // Находим середину массива: начальный индекс и поледний индекс, складываем и делим на 2
+ let center = (0 + 6) / 2
+ 
+ // Рекурсивный способ: функция вызывает саму себя для решения задачи
+ func recursiveBinarySearch(for target: Int, in items: [Int]) -> Int? {
+ func recursiveBinarySearch(for target: Int, in items: [Int], firstIndex: Int, lastIndex: Int) -> Int? {
+ if firstIndex > lastIndex {
+ return nil
+ }
+ // Определить элемент из середины массива
+ let middleIndex = (firstIndex + lastIndex) / 2
+ let item = items[middleIndex]
+ 
+ if item == target {
+ return middleIndex
+ } else if target < item {
+ return recursiveBinarySearch(
+ for: target,
+ in: items,
+ firstIndex: firstIndex,
+ lastIndex: middleIndex - 1
+ )
+ } else {
+ return recursiveBinarySearch(
+ for: target,
+ in: items,
+ firstIndex: middleIndex + 1,
+ lastIndex: lastIndex
+ )
+ }
+ }
+ 
+ return recursiveBinarySearch(
+ for: target,
+ in: items,
+ firstIndex: 0,
+ lastIndex: items.count - 1
+ )
+ }
+ 
+ print(recursiveBinarySearch(for: 7, in: items) ?? "Такого значения нет в массиве")
+
+// Замыкающие выражения
+let numbersA = [5, 8, 20, 13, 1, 4, 3, 6]
+
+func filterLessThanValue(_ value: Int, numbers: [Int]) -> [Int] {
+    var filteredNumbers: [Int] = []
+    
+    for number in numbers {
+        if number < value {
+            filteredNumbers.append(number)
+        }
+    }
+    
+    return filteredNumbers
+}
+
+print(filterLessThanValue(5, numbers: numbersA))
+
+func filterGreaterThanValue(_ value: Int, numbers: [Int]) -> [Int] {
+    var filteredNumbers: [Int] = []
+    
+    for number in numbers {
+        if number > value {
+            filteredNumbers.append(number)
+        }
+    }
+    
+    return filteredNumbers
+}
+
+print(filterGreaterThanValue(5, numbers: numbersA))
+
+func filterWithPredicateClosure(value: Int, numbers: [Int], closure: (Int, Int) -> Bool) -> [Int] {
+    var filteredNumbers: [Int] = []
+    
+    for number in numbers {
+        if closure(number, value) {
+            filteredNumbers.append(number)
+        }
+    }
+    
+    return filteredNumbers
+}
+
+let number = 3
+let value = 5
+var filteredNumbers: [Int] = []
+
+func isNumber(_ number: Int, lessThanValure value: Int) -> Bool {
+    number < value
+}
+
+func isNumber(_ number: Int, greaterThanValure value: Int) -> Bool {
+    number > value
+}
+
+print(
+    filterWithPredicateClosure(
+        value: 5,
+        numbers: numbersA,
+        closure: { $0 < $1 }
+    )
+)
+
+// Свойства с типом замыкающих выражений
+let completion: (Int, Int) -> Int = {
+    $0 + $1
+}
+
+print(completion(7,9))
+
+// Захват значений
+// Используется для управления памятью
+
+var number1 = 3
+var number2 = 5
+
+let closure: () -> Int = { [number1, number2] in // значения захвачены, сохранены в область памяти
+    number1 + number2
+}
+
+print(closure())
+
+number1 = 10
+number2 = 2
+
+print(closure())
+
+
+
