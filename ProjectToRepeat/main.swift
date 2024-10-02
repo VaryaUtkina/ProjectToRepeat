@@ -503,3 +503,73 @@ func getArithmeticMean(_ numbers: Double...) -> Double {
 }
 
 print(getArithmeticMean(1, 0, 7.2, 77, -99, 9))
+
+// Задание 1
+let games = ["Салават Юлаев": ["3:5", "5:5", "N/A"], "Авангврд": ["2:1"], "АкБарс": ["3:3", "1:2"]]
+
+for (team, results) in games {
+    for result in results {
+        print("Игра с \(team) - \(result)")
+    }
+}
+
+// Задание 2
+func sum(of numbers: Double...) -> Double {
+    var total = 0.0
+    for number in numbers {
+        total += number
+    }
+    return total
+}
+
+print(sum(of: 1, 1.5, 0))
+
+// Задание 3
+func isNumberEven(_ number: Int) -> Bool {
+    number % 2 == 0
+}
+
+func isMultipalOfThree(_ number: Int) -> Bool {
+    number % 3 == 0
+}
+
+func getArray(from numberOne: Int, to numberTwo: Int) -> [Int] {
+    if numberOne >= numberTwo {
+        print("Error, the first number must be less then the second")
+        return []
+    } else {
+        var result: [Int] = []
+        var number = numberOne
+        while numberTwo >= number {
+            result.append(number)
+            number += 1
+        }
+        return result
+    }
+}
+
+let numbersFromOne = getArray(from: 1, to: 100)
+
+func getEvenArray(from array: [Int]) -> [Int] {
+    var result: [Int] = []
+    for number in array {
+        if isNumberEven(number) {
+            result.append(number)
+        }
+    }
+    return result
+}
+
+print(getEvenArray(from: numbersFromOne))
+
+func getArrayMultipalOfThree(from array: [Int]) -> [Int] {
+    var result: [Int] = []
+    for number in array {
+        if isMultipalOfThree(number) {
+            result.append(number)
+        }
+    }
+    return result
+}
+
+print(getArrayMultipalOfThree(from: numbersFromOne))
