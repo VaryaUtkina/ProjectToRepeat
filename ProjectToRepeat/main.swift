@@ -1084,13 +1084,13 @@ print(rectangle.area)
 // Задание 1
 class Shape {
     var area: Double {
-        0.0
+        0
     }
     var perimeter: Double {
-        0.0
+        0
     }
     var description: String {
-        "The area of \(type(of: self)) is \(area). Perimeter - \(perimeter)"
+        String(format: "The area of \(type(of: self)) is %.2f. Perimeter - %.2f", area, perimeter)
     }
 }
 
@@ -1103,6 +1103,10 @@ final class Circle: Shape {
     
     override var perimeter: Double {
         .pi * diameter
+    }
+    
+    override var description: String {
+        String(format: "The area of \(type(of: self)) is %.2f. Length - %.2f", area, perimeter)
     }
     
     init(diameter: Double) {
@@ -1136,6 +1140,10 @@ final class Ellipse: Rectangle {
     override var perimeter: Double {
         4 * (.pi * sideA / 2 * sideB / 2 + (sideA / 2 - sideB / 2)) / (sideA / 2 + sideB / 2)
     }
+    
+    override var description: String {
+        String(format: "The area of \(type(of: self)) is %.2f. Length - %.2f", area, perimeter)
+    }
 }
 
 
@@ -1165,3 +1173,73 @@ var golf = Car(model: "VW golf", power: 102)
 print(golf.description)
 golf.increasePower(10)
 print(golf.description)
+
+//Lesson 9
+// Перечисления
+
+enum Weekday {
+    case monday
+    case tuesday
+    case wednesday
+    case thursday
+    case friday
+    case saturday
+    case sunday
+}
+
+let someDay: Weekday = .monday
+
+func setupAlarm(for weekday: Weekday) {
+    switch weekday {
+    case .monday, .tuesday, .wednesday, .thursday, .friday:
+        print("Today is \(weekday). The alarm is set at 8 am")
+    default:
+        print("Today is \(weekday). The alarm is not set")
+    }
+}
+
+setupAlarm(for: someDay)
+
+enum Country: String {
+    case usa = "USA"
+    case russia = "Russia"
+    case china
+}
+
+let country: Country = .usa
+print("case value: \(country.rawValue)")
+
+enum Planet: Int {
+    case mercury = 1
+    case venus
+    case earth
+    case mars = 5
+    case jupiter
+    case saturn
+    case uranus
+    case neptune
+}
+
+let planet: Planet = .jupiter
+print("\(planet) is the \(planet.rawValue) planet from the sun")
+
+let possiblePlanet = Planet(rawValue: 7)
+
+// Ассоциированные параметры
+enum WeekdayV2 {
+    case workday(message: String, time: Int)
+    case weekend(message: String)
+}
+
+var workday: WeekdayV2 = .workday(message: "Set alarm to", time: 8)
+workday = .weekend(message: "Alarm is not set")
+func setAlarm(for weekday: WeekdayV2) {
+    switch weekday {
+    case .workday(let message, let time):
+        print("\(message) \(time) am")
+    case .weekend(let message):
+        print(message)
+    }
+}
+
+setAlarm(for: workday)
