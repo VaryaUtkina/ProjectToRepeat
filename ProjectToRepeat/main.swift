@@ -903,3 +903,44 @@ let classRoom = Classroom()
 classRoom.addStudent(anna)
 classRoom.addStudent(susi)
 print(classRoom.getAverageGrade())
+
+
+// Задание 2
+class Employee {
+    let salary: Int
+    let name: String
+    let surname: String
+    
+    init(salary: Int, name: String, surname: String) {
+        self.salary = salary
+        self.name = name
+        self.surname = surname
+    }
+}
+
+let names = ["John", "Aaron", "Tim", "Ted", "Steven"]
+let surnames = ["Smith", "Dow", "Isaacson", "Pennyworth", "Jankins"]
+
+var employees: [Employee] = []
+for _ in 1...10 {
+    let randomName = names.randomElement()!
+    let randomSurname = surnames.randomElement()!
+    let randomSalary = Int.random(in: 1000...2000)
+    let employee = Employee(
+        salary: randomSalary,
+        name: randomName,
+        surname: randomSurname
+    )
+    employees.append(employee)
+}
+
+employees.forEach { employee in
+    print("\(employee.name) \(employee.surname)'s salary is $\(employee.salary)")
+}
+print("")
+
+let evenSalaryEmployees = employees.filter { $0.salary % 2 == 0 }
+
+evenSalaryEmployees.forEach { employee in
+    print("\(employee.name) \(employee.surname) has even salary. Salary is $\(employee.salary)")
+}
