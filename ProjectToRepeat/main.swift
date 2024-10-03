@@ -827,18 +827,16 @@ class Student {
     let name: String
     let age: Int
     
-    private var grades: [Int] = []
+    var averageGrade: Double {
+        let total = grades.reduce(0, +)
+        return Double(total) / Double(grades.count)
+    }
     
     var description: String {
-        "\(name): \(averageGrade), \(getStatus(averageGrade))"
+        "\(name): \(averageGrade), \(getStatus())"
     }
     
-    var averageGrade: Double {
-        if grades.count == 0 {
-            return 0.0
-        }
-        return Double(grades.reduce(0, +)) / Double(grades.count)
-    }
+    private var grades: [Int] = []
     
     init(name: String, age: Int) {
         self.name = name
@@ -846,22 +844,19 @@ class Student {
     }
     
     func addGrade(_ grade: Int) {
-        grades.append(grade)
+        if (1...10).contains(grade) {
+            grades.append(grade)
+        }
     }
     
-    private func getStatus(_ averageGrade: Double) -> String {
-        let status: String
-        
+    private func getStatus() -> String {
         switch averageGrade {
-        case 0: status = "New"
-        case 1..<3: status = "Underperforming"
-        case 3..<6: status = "Average"
-        case 6..<8: status = "Good"
-        case 8..<10: status = "Excellent"
-        default: status = "Wrong data"
+        case 1.0..<4.0: "Underperforming"
+        case 4.0..<7.0: "Average"
+        case 7.0..<9.0: "Good"
+        case 9.0...10.0: "Excellent"
+        default: "New"
         }
-        
-        return status
     }
 }
 
@@ -880,7 +875,7 @@ susi.addGrade(3)
 print(susi.description)
 
 class Classroom {
-    var students: [Student]
+    private var students: [Student]
     
     init(students: [Student] = []) {
         self.students = students
@@ -890,12 +885,9 @@ class Classroom {
         students.append(student)
     }
     
-    func getAverageGrade() -> Double{
-        if students.count == 0 {
-            return 0.0
-        } else {
-            return students.map { $0.averageGrade }.reduce(0, +) / Double(students.count)
-        }
+    func getAverageGrade() -> Double {
+        let total = students.reduce(0.0) { $0 + $1.averageGrade }
+            return total / Double(students.count)
     }
 }
 
@@ -921,17 +913,12 @@ class Employee {
 let names = ["John", "Aaron", "Tim", "Ted", "Steven"]
 let surnames = ["Smith", "Dow", "Isaacson", "Pennyworth", "Jankins"]
 
-var employees: [Employee] = []
-for _ in 1...10 {
-    let randomName = names.randomElement()!
-    let randomSurname = surnames.randomElement()!
-    let randomSalary = Int.random(in: 1000...2000)
-    let employee = Employee(
-        salary: randomSalary,
-        name: randomName,
-        surname: randomSurname
+let employees: [Employee] = (1...10).map { _ in
+    Employee(
+        salary: Int.random(in: 1000...2000),
+        name: names.randomElement() ?? "",
+        surname: surnames.randomElement() ?? ""
     )
-    employees.append(employee)
 }
 
 employees.forEach { employee in
@@ -939,8 +926,100 @@ employees.forEach { employee in
 }
 print("")
 
-let evenSalaryEmployees = employees.filter { $0.salary % 2 == 0 }
+let evenSalaryEmployees = employees.filter { $0.salary.isMultiple(of: 2) }
 
 evenSalaryEmployees.forEach { employee in
     print("\(employee.name) \(employee.surname) has even salary. Salary is $\(employee.salary)")
+}
+
+
+// Lesson 8
+// Классы: Наследование и полиморфизм. Структуры
+
+// Наследование
+class Human {
+    let name: String
+    var age: Int
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+    
+    func walk() {
+        print("I can walk")
+    }
+    
+    func sleep() {
+        print("I need sleep")
+    }
+    
+    func eat() {
+        print("I need food")
+    }
+}
+
+let personA = Human(name: "Tim Cook", age: 62)
+personA.walk()
+
+class Child: Human {
+    func nursing() {
+        if age <= 5 {
+            print("I need care")
+        } else {
+            print("I can eat independently")
+        }
+    }
+    
+    func parenting() {
+        if age >= 5 && age <= 13 {
+            print("I need an education")
+        } else if age < 5 {
+            print("Me too early tu aducate")
+        } else {
+            print("Me too late to educate")
+        }
+    }
+}
+
+let tomas = Child(name: "Tomas", age: 10)
+tomas.nursing()
+tomas.eat()
+
+final class SchoolChild: Child {
+    func schooling() {
+        if age >= 6 && age <= 17 {
+            print("I have to go to school")
+        } else {
+            print("I'm still too early in school")
+        }
+    }
+}
+
+let sarah = SchoolChild(name: "Sarah", age: 5)
+sarah.schooling()
+
+// Полиморфизм
+final class Animal {
+    var description: String {
+        "This is \(type(of: self)). \(type(of: self)) say \(makeSound())"
+    }
+    
+    func makeSound() -> String {
+        "Unknown sound"
+    }
+}
+
+final class Zoo {
+    private var animals: [Animal] = []
+    
+    func add(animal: Animal) {
+        animals.append(animal)
+    }
+    
+    func showAnimals() {
+        animals.forEach { animal in
+            print(animal.description)
+        }
+    }
 }
