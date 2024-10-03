@@ -1061,6 +1061,7 @@ player.getLocation()
 player.x = 5
 player.getLocation()
 
+/*
 struct Rectangle {
     var width: Int
     var height: Int
@@ -1078,5 +1079,89 @@ struct Rectangle {
 var rectangle = Rectangle(width: 10, height: 5)
 rectangle.scale(with: 2, height: 3)
 print(rectangle.area)
+ */
 
-//
+// Задание 1
+class Shape {
+    var area: Double {
+        0.0
+    }
+    var perimeter: Double {
+        0.0
+    }
+    var description: String {
+        "The area of \(type(of: self)) is \(area). Perimeter - \(perimeter)"
+    }
+}
+
+final class Circle: Shape {
+    let diameter: Double
+    
+    override var area: Double {
+        .pi * pow(diameter, 2) / 4
+    }
+    
+    override var perimeter: Double {
+        .pi * diameter
+    }
+    
+    init(diameter: Double) {
+        self.diameter = diameter
+    }
+}
+
+class Rectangle: Shape {
+    let sideA: Double
+    let sideB: Double
+    
+    override var area: Double {
+        sideA * sideB
+    }
+    
+    override var perimeter: Double {
+        2 * (sideA + sideB)
+    }
+    
+    init(sideA: Double, sideB: Double) {
+        self.sideA = sideA
+        self.sideB = sideB
+    }
+}
+
+final class Ellipse: Rectangle {
+    override var area: Double {
+        sideA / 2 * sideB / 2 * .pi
+    }
+    
+    override var perimeter: Double {
+        4 * (.pi * sideA / 2 * sideB / 2 + (sideA / 2 - sideB / 2)) / (sideA / 2 + sideB / 2)
+    }
+}
+
+
+let circle = Circle(diameter: 10)
+let rectangle = Rectangle(sideA: 10, sideB: 20)
+let ellipse = Ellipse(sideA: 10, sideB: 20)
+
+print(circle.description)
+print(rectangle.description)
+print(ellipse.description)
+
+// Задание 2
+struct Car {
+    let model: String
+    var power: Int
+    
+    var description: String {
+        "Car model: \(model). Car power: \(power) horse-power"
+    }
+    
+    mutating func increasePower(_ power: Int) {
+        self.power += power
+    }
+}
+
+var golf = Car(model: "VW golf", power: 102)
+print(golf.description)
+golf.increasePower(10)
+print(golf.description)
