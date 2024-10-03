@@ -1000,13 +1000,25 @@ let sarah = SchoolChild(name: "Sarah", age: 5)
 sarah.schooling()
 
 // Полиморфизм
-final class Animal {
+class Animal {
     var description: String {
-        "This is \(type(of: self)). \(type(of: self)) say \(makeSound())"
+        "This is \(type(of: self)). \(type(of: self)) say: \(makeSound())"
     }
     
     func makeSound() -> String {
-        "Unknown sound"
+        ""
+    }
+}
+
+final class Cat: Animal {
+    override func makeSound() -> String {
+        "Meow!"
+    }
+}
+
+final class Dog: Animal {
+    override func makeSound() -> String {
+        "Woof!"
     }
 }
 
@@ -1023,3 +1035,48 @@ final class Zoo {
         }
     }
 }
+
+let zoo = Zoo()
+let cat = Cat()
+let dog = Dog()
+
+zoo.add(animal: cat)
+zoo.add(animal: dog)
+zoo.showAnimals()
+
+// Структуры
+struct PlayerLocation {
+    let player: String
+    var x: Int
+    var y: Int
+    
+    func getLocation() {
+        print("\(player) is at \(x) and \(y)")
+    }
+}
+
+var player = PlayerLocation(player: "Player One", x: 10, y: 8)
+
+player.getLocation()
+player.x = 5
+player.getLocation()
+
+struct Rectangle {
+    var width: Int
+    var height: Int
+    
+    var area: Int {
+        width * height
+    }
+    
+    mutating func scale(with: Int, height: Int) {
+        self.width *= width
+        self.height *= height
+    }
+}
+
+var rectangle = Rectangle(width: 10, height: 5)
+rectangle.scale(with: 2, height: 3)
+print(rectangle.area)
+
+//
