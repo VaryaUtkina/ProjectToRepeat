@@ -1243,3 +1243,65 @@ func setAlarm(for weekday: WeekdayV2) {
 }
 
 setAlarm(for: workday)
+
+// Задание 1
+enum CalculationType: String {
+    case addition = "сложения"
+    case subtraction = "вычетания"
+    case multiplication = "умножения"
+    case division = "деления"
+}
+
+func calculate(_ numberOne: Int, and numberTwo: Int, by manipulation: CalculationType) -> Int {
+    let result = switch manipulation {
+    case .addition:
+        numberOne + numberTwo
+    case .subtraction:
+        numberOne - numberTwo
+    case .multiplication:
+        numberOne * numberTwo
+    case .division:
+        numberOne / numberTwo
+    }
+    
+    print("Результат \(manipulation.rawValue) \(numberOne) и \(numberTwo) равен \(result)")
+    
+    return result
+}
+
+let addition = calculate(10, and: 5, by: .addition)
+let subtraction = calculate(10, and: 5, by: .subtraction)
+let multiplication = calculate(10, and: 5, by: .multiplication)
+let division = calculate(10, and: 5, by: .division)
+
+
+// Задание 2
+enum DistanceUnit {
+    case versta(title: String, denotation: String, countries: [String])
+    case kilometer(title: String, denotation: String, countries: [String])
+    case mile(title: String, denotation: String, countries: [NonISUCountry])
+    
+    enum NonISUCountry: String {
+        case usa = "США"
+        case liberia = "Либерия"
+        case myanmar = "Мьянма"
+    }
+}
+
+let countriesWithKM: DistanceUnit = .kilometer(title: "Километр", denotation: "км", countries: ["Россия", "Евросоюз"])
+let countriesWithVersta: DistanceUnit = .versta(title: "Верста", denotation: "vr", countries: ["Русь"])
+let countriesWithMile: DistanceUnit = .mile(title: "Миля", denotation: "м", countries: [.liberia, .myanmar, .usa])
+
+func describeDistance(unit: DistanceUnit) {
+    switch unit {
+    case .versta(let title, let denotation, let countries), 
+            .kilometer(let title, let denotation, let countries):
+        print("\(title). Краткое наименование: \(denotation). Страны: \(countries.joined(separator: ", "))")
+    case .mile(let title, let denotation, let countries):
+        print("\(title). Краткое наименование: \(denotation). Страны: \(countries.map { $0.rawValue }.joined(separator: ", "))")
+    }
+}
+
+describeDistance(unit: countriesWithKM)
+describeDistance(unit: countriesWithVersta)
+describeDistance(unit: countriesWithMile)
